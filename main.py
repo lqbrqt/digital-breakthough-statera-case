@@ -59,7 +59,7 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
         try: 
             cv2.imwrite(f'./results/{number_name}.jpg', image)    
         except:
-            cv2.imwrite('./results/no_number.jpb', image)
+            cv2.imwrite('./results/no_number.jpg', image)
         
         
         
