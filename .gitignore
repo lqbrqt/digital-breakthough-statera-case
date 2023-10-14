@@ -1,0 +1,6 @@
+*.pt
+*.pth
+*.cache
+/boxes
+/results
+/__pycache__
