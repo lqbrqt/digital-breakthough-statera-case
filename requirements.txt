@@ -2,3 +2,5 @@ fastapi
 opencv-python
 python-multipart
 matplotlib
+torch
+ultralytics

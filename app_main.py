@@ -6,9 +6,12 @@ import cv2
 import numpy as np
 import base64
 import shutil
+import torch
+from ultralytics import YOLO
 
 app = FastAPI()
-
+model = YOLO('models/bestv2.pt')
+model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best-11.pt') 
 
 @app.post("/img")
 
@@ -20,9 +23,7 @@ async def processing_img(file: UploadFile = File(...)):
     img = cv2.imread(file_path)
     # byte_image = cv2.imencode(".jpg", im)
 
-    model = YOLO('bestv2.pt')
-    model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='best-11.pt') 
-    
-    main(model, model_numbers, img, file_path)
+    result = main(model, model_numbers, img, file_path)
+    # shutil.rmtree('cashe/')  
 
-    return {"filename": file.filename}
+    return {"result": result}
