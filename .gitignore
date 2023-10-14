@@ -1,1 +1,7 @@
+*.pt
+*.pth
+*.cache
+/boxes
+/results
+/__pycache__
 /venv
