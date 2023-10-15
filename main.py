@@ -26,7 +26,7 @@ if image_file is not None:
     out = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"), "wb")
     out.write(res_img.content)
     out.close()
-    st.write(res_img.content)
+    
 
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.image(img)
