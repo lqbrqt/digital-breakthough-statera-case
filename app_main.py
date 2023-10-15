@@ -1,3 +1,4 @@
+import os
 from main import main
 
 from fastapi import FastAPI, UploadFile, File
@@ -16,6 +17,10 @@ model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best
 @app.post("/img")
 
 async def processing_img(file: UploadFile = File(...)):
+    os.mkdir("cashe")
+    os.mkdir("cashe/boxes")
+    os.mkdir("cashe/results")
+    
     file_path = f'cashe/{file.filename}'
     with open(file_path, 'wb') as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -24,6 +29,6 @@ async def processing_img(file: UploadFile = File(...)):
     # byte_image = cv2.imencode(".jpg", im)
 
     result = main(model, model_numbers, img, file_path)
-    # shutil.rmtree('cashe/')  
+    shutil.rmtree('cashe/')  
 
-    return {"result": result}
+    return result

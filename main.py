@@ -40,19 +40,36 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
                 if len(number_name) > 6:
                     file_name = number_name
                 try:
-                    cv2.imwrite(f'./boxes/{number_name}.jpg', number)  
+                    cv2.imwrite(f'cashe/boxes/{number_name}.jpg', number)  
                 except:
-                    cv2.imwrite(f'./boxes/no_number.jpg', number) 
+                    cv2.imwrite(f'cashe/boxes/no_number.jpg', number) 
                 # number_name = number_name.replace("[", "").replace("]", "").replace(" ", "").replace(",", "")
                 annotator.box_label(b, number_name)
             
         image = annotator.result() 
-        try: 
-            cv2.imwrite(f'./results/{file_name}.jpg', image)    
+        try:
+            cv2.imwrite(f'cashe/results/{file_name}.jpg', image)    
         except:
-            cv2.imwrite('./results/no_number.jpg', image)
+            file_name = 'no_number'
+            cv2.imwrite('cashe/results/no_number.jpg', image)
 
-    return file_name
+    # return file_name
+
+    return {
+        "image": f"{file_name}.jpg",
+		"verified": 'false',  
+		"annotations": [
+			{
+				"label": file_name,
+				"coordinates": {   
+					"x": 879.5,             
+					"y": 239.43883792048929,        
+					"width": 305.0,
+					"height": 59.0
+				}
+			}
+		]
+    }
         
         
         
