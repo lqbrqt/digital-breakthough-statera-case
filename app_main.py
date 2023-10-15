@@ -29,6 +29,6 @@ async def processing_img(file: UploadFile = File(...)):
     # byte_image = cv2.imencode(".jpg", im)
 
     result = main(model, model_numbers, img, file_path)
-    shutil.rmtree('cashe/')  
+    # shutil.rmtree('cashe')  
 
     return result

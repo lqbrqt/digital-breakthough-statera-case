@@ -9,17 +9,22 @@ from ultralytics.utils.plotting import Annotator
 def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> str:
     results = model.predict(image)
     file_name = ""
+    x = 0
+    y = 0
+    w = 0
+    h = 0
+
     for r in results:
         
         annotator = Annotator(image)
         
         boxes = r.boxes
         for box in boxes:
-            
             if box.conf[0] > 0.65:
                 b = box.xyxy[0]  # get box coordinates in (top, left, bottom, right) format
                 c = box.cls
-                
+                x, y, w, h = box.xywhn[0]
+                print(x, y, w, h)
                 number = image[int(b[1]):int(b[3]), int(b[0]):int(b[2])]
                 
                 # For retangle bboxes
@@ -54,7 +59,6 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
             cv2.imwrite('cashe/results/no_number.jpg', image)
 
     # return file_name
-
     return {
         "image": f"{file_name}.jpg",
 		"verified": 'false',  
@@ -62,10 +66,10 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
 			{
 				"label": file_name,
 				"coordinates": {   
-					"x": 879.5,             
-					"y": 239.43883792048929,        
-					"width": 305.0,
-					"height": 59.0
+					"x": float(x),             
+					"y": float(y),        
+					"width": float(w),
+					"height": float(h)
 				}
 			}
 		]
@@ -76,7 +80,7 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
 
 if __name__ == "__main__":
     DATASET_PATH = "./dataset_test"
-    model = YOLO('bestv2.pt')
+    model = YOLO('best.pt')
     model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='best-11.pt') 
     image_paths = os.listdir(DATASET_PATH)
     for image_path in image_paths:
