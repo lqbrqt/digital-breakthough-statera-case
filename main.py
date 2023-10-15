@@ -8,7 +8,7 @@ import json
 image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
 if image_file is not None:
     file_details = {"FileName":image_file.name,"FileType":image_file.type}
-    st.write(file_details)
+
     img = Image.open(image_file)
     st.image(img)
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),"wb") as f: 
@@ -30,7 +30,7 @@ if image_file is not None:
 
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.image(img)
-
+    st.write('плейсхолдер для label')
     st.write('JSON:')
     st.write(str(a))
     
