@@ -196,17 +196,17 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
                 except:
                     cv2.imwrite(f'./boxes/no_number.jpg', number) 
                 number_name = number_name.replace("[", "").replace("]", "").replace(" ", "").replace(",", "")
-               
+                print(number_name)
                     
                 annotator.box_label(b, number_name)
         image_path = image_path.replace("cashe/", "")
         # print("IMAGE_PATH: ", image_path)
         image = annotator.result() 
         try:
-            cv2.imwrite(f'./cashe/results/{image_path}.jpg', image)    
+            cv2.imwrite(f'./results/{file_name}.jpg', image)    
         except:
             file_name = 'no_number'
-            cv2.imwrite(f'./cashe/results/{image_path}.jpg', image)
+            cv2.imwrite(f'./results/{file_name}.jpg', image)
     label = 0
     try:
         label = int(file_name.replace("_", ""))
@@ -216,7 +216,8 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
     
     return {
         "image": f"{image_path}",
-		"verified": str(validate_number(file_name)),  
+		"verified": str(validate_number(file_name)), 
+        "type": "number" if len(results) > 0 else "NONE", 
 		"annotations": [
 			{
 				"label": int(label),
@@ -236,20 +237,18 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
 
 if __name__ == "__main__":
     DATASET_PATH = "./test_dataset/dataset"
-    accuricy = []
+    submission = pd.DataFrame({"filename": [], "type": [], "number": [], "is_correct": []})
     model = YOLO('bestv2.pt')
     model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='best-11.pt') 
     image_paths = os.listdir(DATASET_PATH)
     image_counter = 0
-    for image_path in image_paths:
+    for index, image_path in enumerate(image_paths):
         image = cv2.imread(f"{DATASET_PATH}/{image_path}")
         labels = main(model, model_numbers, image, image_path)
-        submission = pd.DataFrame({"filename": [], "type": [], "number": [], "is_correct": []})
-        print("THEIR: ", image_path)
-        print("OUR: ", labels["image"])
-        if image_path == labels["image"]:
-           accuricy.append(1)
-        else:
-           accuricy.append(0)
-        
-        print("acc: ", np.array(accuricy).mean())
+        print(labels)
+        number_type = labels["type"]
+        verified = labels["verified"]
+        number = labels["annotations"][0]["label"]
+        submission.loc[len(submission.index)] = [image_path, number_type, number, verified]
+    
+    submission.to_csv("submission.csv")
