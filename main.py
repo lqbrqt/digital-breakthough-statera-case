@@ -21,8 +21,8 @@ if image_file is not None:
     # дождаться ответа
     a = json.loads(res)
 
-    st.write('http://127.0.0.1:8000/get_res_img/'+a["image"]+'.jpg')
-    res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"]+'.jpg')
+    
+    res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"])
     out = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"), "wb")
     out.write(res_img.content)
     out.close()
