@@ -17,7 +17,7 @@ if image_file is not None:
 
     # отправить запрос
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),'rb') as filedata: 
-      res = requests.post(" http://127.0.0.1:8000/img/",files = {'file':filedata}) 
+      res = requests.post(" http://127.0.0.1:8000/img/",files = {'file':filedata}).text 
     # дождаться ответа
     res = json.loads(res)
     st.write(type(res["image"]))
