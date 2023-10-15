@@ -199,20 +199,21 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
                
                     
                 annotator.box_label(b, number_name)
+        image_path = image_path.replace("cashe/", "")
         # print("IMAGE_PATH: ", image_path)
         image = annotator.result() 
         try:
-            cv2.imwrite(f'./results/{file_name}.jpg', image)    
+            cv2.imwrite(f'./cashe/results/{image_path}.jpg', image)    
         except:
             file_name = 'no_number'
-            cv2.imwrite('./results/no_number.jpg', image)
+            cv2.imwrite(f'./cashe/results/{image_path}.jpg', image)
     label = 0
     try:
         label = int(file_name.replace("_", ""))
     except:
         label = 0
     # return file_name
-    image_path = image_path.replace("cashe/", "")
+    
     return {
         "image": f"{image_path}",
 		"verified": str(validate_number(file_name)),  
@@ -243,7 +244,7 @@ if __name__ == "__main__":
     for image_path in image_paths:
         image = cv2.imread(f"{DATASET_PATH}/{image_path}")
         labels = main(model, model_numbers, image, image_path)
-        print(labels)
+        submission = pd.DataFrame({"filename": [], "type": [], "number": [], "is_correct": []})
         print("THEIR: ", image_path)
         print("OUR: ", labels["image"])
         if image_path == labels["image"]:
