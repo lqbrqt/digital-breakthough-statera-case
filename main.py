@@ -44,10 +44,10 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
                     number_name = number_name + str(int(num_res[-1]))
                 if len(number_name) > 6:
                     file_name = number_name
-                try:
-                    cv2.imwrite(f'cashe/boxes/{number_name}.jpg', number)  
-                except:
-                    cv2.imwrite(f'cashe/boxes/no_number.jpg', number) 
+                # try:
+                #     cv2.imwrite(f'cashe/boxes/{number_name}.jpg', number)  
+                # except:
+                #     cv2.imwrite(f'cashe/boxes/no_number.jpg', number) 
                 # number_name = number_name.replace("[", "").replace("]", "").replace(" ", "").replace(",", "")
                 annotator.box_label(b, number_name)
             
@@ -80,7 +80,7 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
 
 if __name__ == "__main__":
     DATASET_PATH = "./dataset_test"
-    model = YOLO('best.pt')
+    model = YOLO('bestv2.pt')
     model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='best-11.pt') 
     image_paths = os.listdir(DATASET_PATH)
     for image_path in image_paths:

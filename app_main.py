@@ -11,15 +11,13 @@ import torch
 from ultralytics import YOLO
 
 app = FastAPI()
-model = YOLO('models/best.pt')
+model = YOLO('models/bestv2.pt')
 model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best-11.pt') 
 
 @app.post("/img")
-
 async def processing_img(file: UploadFile = File(...)):
-    os.mkdir("cashe")
-    os.mkdir("cashe/boxes")
-    os.mkdir("cashe/results")
+    os.makedirs("cashe", exist_ok=True)
+    os.makedirs("cashe/results", exist_ok=True)
     
     file_path = f'cashe/{file.filename}'
     with open(file_path, 'wb') as buffer:
@@ -30,5 +28,14 @@ async def processing_img(file: UploadFile = File(...)):
 
     result = main(model, model_numbers, img, file_path)
     # shutil.rmtree('cashe')  
-
+    os.remove(file_path)
     return result
+
+@app.get("/get_res_img/{filename}", responses={200: {"description": "A picture of a vector image.", "content" : {"image/jpeg" : {"example" : "No example available. Just imagine a picture of a vector image."}}}})
+def image_endpoint(filename: str):
+    file_path = f'cashe/results/{filename}'
+    if os.path.exists(file_path):
+        os.rename(file_path, 'cashe/results/temp.jpg')
+        return FileResponse('cashe/results/temp.jpg', media_type="image/jpeg", filename=filename)
+    
+    return {"error" : "File not found!"}
