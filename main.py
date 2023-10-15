@@ -32,7 +32,8 @@ if image_file is not None:
     st.write('Результат:')
     st.image(img)
     ind = str(a).find('label')
-    st.success(str(a)[ind:])
+    ind_end = str(a).find(", 'coordinates'")
+    st.success(str(a)[ind+7:ind_end])
     st.write('JSON:')
     st.write(str(a))
     
