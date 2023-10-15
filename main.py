@@ -10,6 +10,7 @@ if image_file is not None:
     file_details = {"FileName":image_file.name,"FileType":image_file.type}
 
     img = Image.open(image_file)
+    st.write('Исходное фото:')
     st.image(img)
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),"wb") as f: 
       f.write(image_file.getbuffer())         
@@ -29,6 +30,7 @@ if image_file is not None:
     
 
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
+    st.write('Результат:')
     st.image(img)
     st.write('плейсхолдер для label')
     st.write('JSON:')
