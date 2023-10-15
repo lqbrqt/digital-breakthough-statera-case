@@ -31,6 +31,6 @@ if image_file is not None:
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.image(img)
 
-    st.write(str(res))
+    st.write('JSON:')
     st.write(str(a))
     
