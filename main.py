@@ -10,26 +10,31 @@ import pandas as pd
 def validate_number(num: str) -> bool:
     num_list = list(num)
     if len(num_list) != 8: return False
-    main_sum = int(num_list[-1])
-    num_list.pop(-1)
-    num_list = [int(i) for i in num_list]
-    mult = [2, 1, 2, 1, 2, 1, 2]
-    print(num_list)
-    print(mult)
-    num_list = [a*b for a,b in zip(num_list, mult)]
+    try:
+        main_sum = int(num_list[-1])
+        num_list.pop(-1)
+        print(num_list)
+        num_list = [int(i) for i in num_list]
+        mult = [2, 1, 2, 1, 2, 1, 2]
+        print(num_list)
+        print(mult)
+        num_list = [a*b for a,b in zip(num_list, mult)]
 
-    print(num_list)
+        print(num_list)
 
-    sum = 0
-    for elem in num_list:
-        if elem > 9:
-            sum = sum + int(str(elem)[0]) + int(str(elem)[1])
-        else:
-            sum = sum + elem
-    print(main_sum)
-    print(sum)
-    if main_sum == (10 - sum % 10):
-        return True
+        sum = 0
+        for elem in num_list:
+            if elem > 9:
+                sum = sum + int(str(elem)[0]) + int(str(elem)[1])
+            else:
+                sum = sum + elem
+        print(main_sum)
+        print(sum)
+        if main_sum == (10 - sum % 10):
+            return True
+    except:
+       return False
+
     return False
 
 def prepare_arr(arr, n):
@@ -205,16 +210,14 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
     try:
         label = int(file_name.replace("_", ""))
     except:
-        if file_name == "":
-          file_name = "NONE"
         label = 0
     # return file_name
     return {
-        "image": f"{file_name}.jpg",
+        "image": f"{image_path}.jpg",
 		"verified": str(validate_number(file_name)),  
 		"annotations": [
 			{
-				"label": label,
+				"label": int(label),
 				"coordinates": {   
 					"x": float(x),             
 					"y": float(y),        
