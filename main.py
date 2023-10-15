@@ -24,7 +24,7 @@ if image_file is not None:
 
     st.write(str(a))
     
-    res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"])
+    res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"]+".jpg")
     out = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"), "wb")
     out.write(res_img.content)
     out.close()
