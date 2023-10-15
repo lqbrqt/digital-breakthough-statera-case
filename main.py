@@ -22,7 +22,6 @@ if image_file is not None:
     os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name))
     a = json.loads(res)
 
-    st.write(str(a))
     
     res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"]+".jpg")
     out = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"), "wb")
@@ -32,7 +31,7 @@ if image_file is not None:
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.write('Результат:')
     st.image(img)
-    st.success('плейсхолдер для label')
+    st.success(a['annotations']['label'])
     st.write('JSON:')
     st.write(str(a))
     
