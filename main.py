@@ -14,8 +14,9 @@ if image_file is not None:
       f.write(image_file.getbuffer())         
     st.success("Saved File")
 
-    # отправить запрос 
-    res = requests.post(" http://127.0.0.1:8000",files = os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name)) 
+    # отправить запрос
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),'rb') as filedata: 
+      res = requests.post(" http://127.0.0.1:8000",files = filedata) 
     # дождаться ответа
     
     img = Image.open(image_file) # полученный файл
