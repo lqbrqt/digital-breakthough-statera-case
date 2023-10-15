@@ -212,6 +212,7 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
     except:
         label = 0
     # return file_name
+    image_path = image_path.replace("cashe/", "")
     return {
         "image": f"{image_path}",
 		"verified": str(validate_number(file_name)),  
