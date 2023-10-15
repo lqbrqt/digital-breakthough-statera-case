@@ -29,9 +29,6 @@ if image_file is not None:
     out.write(res_img.content)
     out.close()
 
-    st.write('http://127.0.0.1:8000/get_res_img/'+a["image"])
-    st.write(res_img.content)
-
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.write('Результат:')
     st.image(img)
