@@ -11,7 +11,7 @@ import torch
 from ultralytics import YOLO
 
 app = FastAPI()
-model = YOLO('models/bestv2.pt')
+model = YOLO('models/best.pt')
 model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best-11.pt') 
 
 @app.post("/img")
