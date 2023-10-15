@@ -1,7 +1,7 @@
 import os
 from main import main
 
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Query
 from starlette.responses import FileResponse, StreamingResponse
 import cv2
 import numpy as np
@@ -15,7 +15,7 @@ model = YOLO('models/best.pt')
 model_numbers = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best-11.pt') 
 
 @app.post("/img")
-async def processing_img(file: UploadFile = File(...)):
+async def processing_img(file: UploadFile = File(...), save_img : bool = False):
     os.makedirs("cashe", exist_ok=True)
     os.makedirs("cashe/results", exist_ok=True)
     
@@ -29,6 +29,8 @@ async def processing_img(file: UploadFile = File(...)):
     result = main(model, model_numbers, img, file_path)
     # shutil.rmtree('cashe')  
     os.remove(file_path)
+    if save_img == False:
+        os.remove(f"cashe/results/{result['image']}")
     return result
 
 @app.get("/get_res_img/{filename}", responses={200: {"description": "A picture of a vector image.", "content" : {"image/jpeg" : {"example" : "No example available. Just imagine a picture of a vector image."}}}})
