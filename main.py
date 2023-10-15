@@ -21,7 +21,7 @@ if image_file is not None:
     # дождаться ответа
     os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name))
     a = json.loads(res)
-    
+
     st.write(str(a))
     
     res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"])
@@ -29,7 +29,7 @@ if image_file is not None:
     out.write(res_img.content)
     out.close()
 
-    st.write(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"))
+    st.write('http://127.0.0.1:8000/get_res_img/'+a["image"])
     st.write(res_img.content)
 
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
