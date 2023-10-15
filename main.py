@@ -5,7 +5,7 @@ import requests
 import json
 
 
-image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
+image_file = st.file_uploader("Upload An Image",type=['jpg'])
 if image_file is not None:
     file_details = {"FileName":image_file.name,"FileType":image_file.type}
 
