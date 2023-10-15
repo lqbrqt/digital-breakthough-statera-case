@@ -1,0 +1,7 @@
+path: C:\Users\Loinos\Desktop\HCP\trains\full\
+train: 'train\images'
+val: 'train\valid'
+test: 'train\images'
+# class names
+names: 
+  0: 'number'
