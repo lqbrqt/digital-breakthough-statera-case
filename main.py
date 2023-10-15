@@ -31,7 +31,8 @@ if image_file is not None:
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.write('Результат:')
     st.image(img)
-    st.success(res['annotations']['label'])
+    ind = str(a).find('label')
+    st.success(str(a)[ind:])
     st.write('JSON:')
     st.write(str(a))
     
