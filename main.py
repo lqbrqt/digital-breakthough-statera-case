@@ -213,7 +213,7 @@ def main(model: YOLO, model_numbers: YOLO, image: np.array, image_path: str) -> 
         label = 0
     # return file_name
     return {
-        "image": f"{image_path}.jpg",
+        "image": f"{image_path}",
 		"verified": str(validate_number(file_name)),  
 		"annotations": [
 			{
