@@ -20,13 +20,13 @@ if image_file is not None:
       res = requests.post(" http://127.0.0.1:8000/img/",files = {'file':filedata}).text 
     # дождаться ответа
     a = json.loads(res)
-    st.write(type(a["image"]))
+   
 
     res_img = requests.get('http://127.0.0.1:8000/get_res_img/'+a["image"]+'.jpg')
     out = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg"), "wb")
     out.write(res_img.content)
     out.close()
-    
+    st.write(res_img.content)
 
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.image(img)
