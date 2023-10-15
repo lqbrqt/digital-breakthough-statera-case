@@ -22,6 +22,6 @@ if image_file is not None:
     img = Image.open(image_file) # полученный файл
     st.image(img)
 
-    st.write(str(res))
+    st.write(str(res.content))
     st.write('плейсхолдер для json')
     
