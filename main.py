@@ -14,7 +14,6 @@ if image_file is not None:
     st.image(img)
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),"wb") as f: 
       f.write(image_file.getbuffer())         
-    st.success("Saved File")
 
     # отправить запрос
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir",image_file.name),'rb') as filedata: 
@@ -32,7 +31,7 @@ if image_file is not None:
     img = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"tempDir","img.jpg")) # полученный файл
     st.write('Результат:')
     st.image(img)
-    st.write('плейсхолдер для label')
+    st.success('плейсхолдер для label')
     st.write('JSON:')
     st.write(str(a))
     
