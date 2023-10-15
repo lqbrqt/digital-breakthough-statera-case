@@ -32,5 +32,5 @@ if image_file is not None:
     st.image(img)
 
     st.write(str(res))
-    st.write('плейсхолдер для json')
+    st.write(str(a))
     
